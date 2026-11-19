@@ -1,0 +1,15 @@
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:8011:8011"
+    volumes:
+      - serviceflow-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8011/health', timeout=2).close()"]
+      interval: 20s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  serviceflow-data:
